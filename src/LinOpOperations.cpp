@@ -206,7 +206,8 @@ std::vector<Matrix> stack_matrices(LinOp &lin, bool vertical) {
   int offset = 0;
   int num_args = lin.args.size();
   for (int idx = 0; idx < num_args; idx++) {
-    LinOp arg = *lin.args[idx];
+    // LinOp arg = *lin.args[idx];
+    LinOp *arg = lin.args[idx];
 
     /* If VERTICAL, columns that are interleaved. Otherwise, they are
        laid out in order. */
@@ -214,23 +215,27 @@ std::vector<Matrix> stack_matrices(LinOp &lin, bool vertical) {
     int offset_increment;
     if (vertical) {
       column_offset = lin.size[0];
-      offset_increment = arg.size[0];
+      // offset_increment = arg.size[0];
+      offset_increment = arg->size[0];
     } else {
-      column_offset = arg.size[0];
-      offset_increment = arg.size[0] * arg.size[1];
+      // column_offset = arg.size[0];
+      // offset_increment = arg.size[0] * arg.size[1];
+      column_offset = arg->size[0];
+      offset_increment = arg->size[0] * arg->size[1];
     }
 
     std::vector<Triplet> tripletList;
-    tripletList.reserve(arg.size[0] * arg.size[1]);
-    for (int i = 0; i < arg.size[0]; i++) {
-      for (int j = 0; j < arg.size[1]; j++) {
+    // tripletList.reserve(arg.size[0] * arg.size[1]);
+    tripletList.reserve(arg->size[0] * arg->size[1]);
+    for (int i = 0; i < arg->size[0]; i++) {
+      for (int j = 0; j < arg->size[1]; j++) {
         int row_idx = i + (j * column_offset) + offset;
-        int col_idx = i + (j * arg.size[0]);
+        int col_idx = i + (j * arg->size[0]);
         tripletList.push_back(Triplet(row_idx, col_idx, 1));
       }
     }
 
-    Matrix coeff(lin.size[0] * lin.size[1], arg.size[0] * arg.size[1]);
+    Matrix coeff(lin.size[0] * lin.size[1], arg->size[0] * arg->size[1]);
     coeff.setFromTriplets(tripletList.begin(), tripletList.end());
     coeff.makeCompressed();
     coeffs_mats.push_back(coeff);

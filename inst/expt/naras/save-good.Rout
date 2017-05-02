@@ -1,0 +1,493 @@
+
+R version 3.3.3 (2017-03-06) -- "Another Canoe"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin13.4.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> > options(STERM='iESS', str.dendrogram.last="'", editor='emacsclient', show.error.locations=TRUE)
+> library(cvxr)
+library(MASS)
+set.seed(1234)
+n <- 2
+m <- 1
+
+Attaching package: ‘cvxr’
+
+The following object is masked from ‘package:stats’:
+
+    reshape
+
+The following objects are masked from ‘package:base’:
+
+    F, trace
+
+> > > > > A <- matrix(rnorm(n*m), nrow = n, ncol = m)
+> b <- matrix(rnorm(n), nrow = n)
+> x <- Variable(rows = m)
+> obj <- Minimize(SumSquares(A %*% x - b))
+> res <- solve(Problem(obj))
+[1] "Calling CVXcanon"
+LinOp id 7b82c067-2135-4ff0-8f49-555d13fb887c Created!
+LinOp Id 7b82c067-2135-4ff0-8f49-555d13fb887c type now 0
+LinOpVector id 1ba0c7cd-c9b5-46d4-9e41-f017d765b699 Created!
+LinOp id 34988d38-042a-400d-a226-06d01ce3799f Created!
+LinOp Id 34988d38-042a-400d-a226-06d01ce3799f type now 26
+LinOp id 646206fd-5c41-4dda-a2aa-9f6703a6b16e Created!
+LinOp id 6c1adee4-cf85-4755-9222-ad0ae732c71b Created!
+LinOp id f8430e28-cf44-4df9-8d66-98fcbb1f1934 Created!
+LinOp Id 646206fd-5c41-4dda-a2aa-9f6703a6b16e type now 6
+LinOp Id 6c1adee4-cf85-4755-9222-ad0ae732c71b type now 19
+LinOp Id f8430e28-cf44-4df9-8d66-98fcbb1f1934 type now 0
+LinOp id 3a994998-dd29-4023-ad02-015f135d3a1a Created!
+LinOp id dd3d5b3c-4863-463d-aa8a-e1da530c0ed0 Created!
+LinOp id bec27a55-e815-4944-9e7f-87b758024de8 Created!
+LinOp Id 3a994998-dd29-4023-ad02-015f135d3a1a type now 6
+LinOp Id dd3d5b3c-4863-463d-aa8a-e1da530c0ed0 type now 19
+LinOp id fb00ba34-b509-4735-849c-d4945cfc9c7f Created!
+LinOp Id bec27a55-e815-4944-9e7f-87b758024de8 type now 7
+LinOp Id fb00ba34-b509-4735-849c-d4945cfc9c7f type now 0
+LinOp id 66e0da1c-f26d-4a58-9e81-e9fea7d210a2 Created!
+LinOp id 1621e861-6a0c-4e94-9ef5-30814a459c4a Created!
+LinOp Id 66e0da1c-f26d-4a58-9e81-e9fea7d210a2 type now 2
+LinOp id f673c8de-c5b4-45fc-97d2-d44980548827 Created!
+LinOp id 970e2cde-e618-41db-8099-54aa8ad8ad20 Created!
+LinOp Id 1621e861-6a0c-4e94-9ef5-30814a459c4a type now 6
+LinOp id c96e8e67-8d2e-462b-a59b-1f56fe26f7f8 Created!
+LinOp Id f673c8de-c5b4-45fc-97d2-d44980548827 type now 2
+LinOp Id 970e2cde-e618-41db-8099-54aa8ad8ad20 type now 20
+LinOp Id c96e8e67-8d2e-462b-a59b-1f56fe26f7f8 type now 0
+LinOp id b79be319-dcfa-489c-ba76-11a37d9500b3 Created!
+LinOp Id b79be319-dcfa-489c-ba76-11a37d9500b3 type now 25
+LinOp id 879501b3-1fce-4a87-b747-d23c90c87a53 Created!
+LinOp id 6894ab9d-7988-4cef-b051-0403f7e1fd0b Created!
+LinOp Id 879501b3-1fce-4a87-b747-d23c90c87a53 type now 7
+LinOp Id 6894ab9d-7988-4cef-b051-0403f7e1fd0b type now 19
+Objective:
+[1] "LinOp(id=7b82c067-2135-4ff0-8f49-555d13fb887c, type=VARIABLE, size=[1, 1], args=[  ], sparse=FALSE, data=[6])"
+Constraints:
+[1] "[ LinOp(id=34988d38-042a-400d-a226-06d01ce3799f, type=SOC, size=[4, 1], args=[ LinOp(id=646206fd-5c41-4dda-a2aa-9f6703a6b16e, type=SUM, size=[1, 1], args=[ LinOp(id=6c1adee4-cf85-4755-9222-ad0ae732c71b, type=SCALAR_CONST, size=[1, 1], args=[  ], sparse=FALSE, data=[1]), LinOp(id=f8430e28-cf44-4df9-8d66-98fcbb1f1934, type=VARIABLE, size=[1, 1], args=[  ], sparse=FALSE, data=[6]) ], sparse=FALSE, data=[]), LinOp(id=3a994998-dd29-4023-ad02-015f135d3a1a, type=SUM, size=[1, 1], args=[ LinOp(id=dd3d5b3c-4863-463d-aa8a-e1da530c0ed0, type=SCALAR_CONST, size=[1, 1], args=[  ], sparse=FALSE, data=[1]), LinOp(id=bec27a55-e815-4944-9e7f-87b758024de8, type=NEG, size=[1, 1], args=[ LinOp(id=fb00ba34-b509-4735-849c-d4945cfc9c7f, type=VARIABLE, size=[1, 1], args=[  ], sparse=FALSE, data=[6]) ], sparse=FALSE, data=[]) ], sparse=FALSE, data=[]), LinOp(id=66e0da1c-f26d-4a58-9e81-e9fea7d210a2, type=MUL, size=[2, 1], args=[ LinOp(id=1621e861-6a0c-4e94-9ef5-30814a459c4a, type=SUM, size=[2, 1], args=[ LinOp(id=f673c8de-c5b4-45fc-97d2-d44980548827, type=MUL, size=[2, 1], args=[ LinOp(id=c96e8e67-8d2e-462b-a59b-1f56fe26f7f8, type=VARIABLE, size=[1, 1], args=[  ], sparse=FALSE, data=[5]) ], sparse=FALSE, data=[-1.20706574938542, 0.27742924211066]), LinOp(id=970e2cde-e618-41db-8099-54aa8ad8ad20, type=DENSE_CONST, size=[2, 1], args=[  ], sparse=FALSE, data=[-1.08444117668306, 2.34569770262935]) ], sparse=FALSE, data=[]) ], sparse=FALSE, data=[2]) ], sparse=FALSE, data=[3]), LinOp(id=b79be319-dcfa-489c-ba76-11a37d9500b3, type=LEQ, size=[1, 1], args=[ LinOp(id=879501b3-1fce-4a87-b747-d23c90c87a53, type=NEG, size=[1, 1], args=[ LinOp(id=6894ab9d-7988-4cef-b051-0403f7e1fd0b, type=SCALAR_CONST, size=[1, 1], args=[  ], sparse=FALSE, data=[1]) ], sparse=FALSE, data=[]) ], sparse=FALSE, data=[7]) ]"
+26
+25
+After constraints
+After solver options
+26
+25
+In filter_constraints
+26
+25
+In filter_constraints (before return)
+26
+25
+After constr_map
+After compute_dimensions
+After get_vars_and_offsets
+Before Ecos
+In get_dual_variables
+In get_dual_variables
+before problem data
+after problem data
+In format_affine_constr
+after eq constrs
+In format_affine_constr
+after leq constrs
+In format_soc_constrs
+In negate_expression
+LinOp id 706dc931-63e0-4cb9-87bd-f71a931ff4b6 Created!
+In negate_expression
+LinOp id 1dc600d6-fdea-4d1e-9ed2-e65514b41b14 Created!
+In negate_expression
+LinOp id 4b437459-016f-4daa-9190-0dee09cdbd2e Created!
+after soc constrs
+In format_soc_elmewise_constrs
+after soc_elemwise_constrs
+In format_exp_constrs
+after ineq constrs
+before objdata
+In build_matrix before get_total_constraint_length
+In build_matrix after get_total_constraint_length
+In build_matrix before loop
+In build_matrix before process_constraint
+   LinOp id is 7b82c067-2135-4ff0-8f49-555d13fb887c
+gc done
+Entered get_coefficient
+   get_coefficient LinOp id is 7b82c067-2135-4ff0-8f49-555d13fb887c
+Before get_variable_coeffs
+after get_variable_coeffs
+Leaving get_coefficient
+In process_constraint
+In process_constraint else start
+In process_constraint else end
+In build_matrix after process_constraint
+   LinOp id is 7b82c067-2135-4ff0-8f49-555d13fb887c
+In build_matrix after loop
+after objdata
+In build_matrix before get_total_constraint_length
+In build_matrix after get_total_constraint_length
+In build_matrix before loop
+In build_matrix after loop
+after eqdata
+In build_matrix before get_total_constraint_length
+In build_matrix after get_total_constraint_length
+In build_matrix before loop
+In build_matrix before process_constraint
+   LinOp id is 879501b3-1fce-4a87-b747-d23c90c87a53
+gc done
+Entered get_coefficient
+   get_coefficient LinOp id is 879501b3-1fce-4a87-b747-d23c90c87a53
+Before get_func_coeffs
+after get_func_coeffs
+Matrix coeff
+-1
+
+Before get_coefficient (recursive) rh_coeffs
+Entered get_coefficient
+   get_coefficient LinOp id is 6894ab9d-7988-4cef-b051-0403f7e1fd0b
+Before get_const_coeffs
+after get_const_coeffs
+Leaving get_coefficient
+after get_coefficient (recursive) rh_coeffs
+mul_by_const coeff_mat
+-1
+
+mul_by_const rh
+1
+
+after mul_by_const
+Leaving get_coefficient
+In process_constraint
+In build_matrix after process_constraint
+   LinOp id is 879501b3-1fce-4a87-b747-d23c90c87a53
+In build_matrix before process_constraint
+   LinOp id is 706dc931-63e0-4cb9-87bd-f71a931ff4b6
+gc done
+Entered get_coefficient
+   get_coefficient LinOp id is 706dc931-63e0-4cb9-87bd-f71a931ff4b6
+Before get_func_coeffs
+after get_func_coeffs
+Matrix coeff
+-1
+
+Before get_coefficient (recursive) rh_coeffs
+Entered get_coefficient
+   get_coefficient LinOp id is 646206fd-5c41-4dda-a2aa-9f6703a6b16e
+Before get_func_coeffs
+after get_func_coeffs
+Matrix coeff
+1
+
+Before get_coefficient (recursive) rh_coeffs
+Entered get_coefficient
+   get_coefficient LinOp id is 6c1adee4-cf85-4755-9222-ad0ae732c71b
+Before get_const_coeffs
+after get_const_coeffs
+Leaving get_coefficient
+after get_coefficient (recursive) rh_coeffs
+mul_by_const coeff_mat
+1
+
+mul_by_const rh
+1
+
+after mul_by_const
+Matrix coeff
+1
+
+Before get_coefficient (recursive) rh_coeffs
+Entered get_coefficient
+   get_coefficient LinOp id is f8430e28-cf44-4df9-8d66-98fcbb1f1934
+Before get_variable_coeffs
+after get_variable_coeffs
+Leaving get_coefficient
+after get_coefficient (recursive) rh_coeffs
+mul_by_const coeff_mat
+1
+
+mul_by_const rh
+1
+
+after mul_by_const
+Leaving get_coefficient
+after get_coefficient (recursive) rh_coeffs
+mul_by_const coeff_mat
+-1
+
+mul_by_const rh
+1
+
+mul_by_const coeff_mat
+-1
+
+mul_by_const rh
+1
+
+after mul_by_const
+Leaving get_coefficient
+In process_constraint
+In process_constraint else start
+In process_constraint else end
+In build_matrix after process_constraint
+   LinOp id is 706dc931-63e0-4cb9-87bd-f71a931ff4b6
+In build_matrix before process_constraint
+   LinOp id is 1dc600d6-fdea-4d1e-9ed2-e65514b41b14
+gc done
+Entered get_coefficient
+   get_coefficient LinOp id is 1dc600d6-fdea-4d1e-9ed2-e65514b41b14
+Before get_func_coeffs
+after get_func_coeffs
+Matrix coeff
+-1
+
+Before get_coefficient (recursive) rh_coeffs
+Entered get_coefficient
+   get_coefficient LinOp id is 3a994998-dd29-4023-ad02-015f135d3a1a
+Before get_func_coeffs
+after get_func_coeffs
+Matrix coeff
+1
+
+Before get_coefficient (recursive) rh_coeffs
+Entered get_coefficient
+   get_coefficient LinOp id is dd3d5b3c-4863-463d-aa8a-e1da530c0ed0
+Before get_const_coeffs
+after get_const_coeffs
+Leaving get_coefficient
+after get_coefficient (recursive) rh_coeffs
+mul_by_const coeff_mat
+1
+
+mul_by_const rh
+1
+
+after mul_by_const
+Matrix coeff
+1
+
+Before get_coefficient (recursive) rh_coeffs
+Entered get_coefficient
+   get_coefficient LinOp id is bec27a55-e815-4944-9e7f-87b758024de8
+Before get_func_coeffs
+after get_func_coeffs
+Matrix coeff
+-1
+
+Before get_coefficient (recursive) rh_coeffs
+Entered get_coefficient
+   get_coefficient LinOp id is fb00ba34-b509-4735-849c-d4945cfc9c7f
+Before get_variable_coeffs
+after get_variable_coeffs
+Leaving get_coefficient
+after get_coefficient (recursive) rh_coeffs
+mul_by_const coeff_mat
+-1
+
+mul_by_const rh
+1
+
+after mul_by_const
+Leaving get_coefficient
+after get_coefficient (recursive) rh_coeffs
+mul_by_const coeff_mat
+1
+
+mul_by_const rh
+-1
+
+after mul_by_const
+Leaving get_coefficient
+after get_coefficient (recursive) rh_coeffs
+mul_by_const coeff_mat
+-1
+
+mul_by_const rh
+1
+
+mul_by_const coeff_mat
+-1
+
+mul_by_const rh
+-1
+
+after mul_by_const
+Leaving get_coefficient
+In process_constraint
+In process_constraint else start
+In process_constraint else end
+In build_matrix after process_constraint
+   LinOp id is 1dc600d6-fdea-4d1e-9ed2-e65514b41b14
+In build_matrix before process_constraint
+   LinOp id is 4b437459-016f-4daa-9190-0dee09cdbd2e
+gc done
+Entered get_coefficient
+   get_coefficient LinOp id is 4b437459-016f-4daa-9190-0dee09cdbd2e
+Before get_func_coeffs
+after get_func_coeffs
+Matrix coeff
+-1 0
+0 -1
+
+Before get_coefficient (recursive) rh_coeffs
+Entered get_coefficient
+   get_coefficient LinOp id is 66e0da1c-f26d-4a58-9e81-e9fea7d210a2
+Before get_func_coeffs
+after get_func_coeffs
+Matrix coeff
+2
+
+Before get_coefficient (recursive) rh_coeffs
+Entered get_coefficient
+   get_coefficient LinOp id is 1621e861-6a0c-4e94-9ef5-30814a459c4a
+Before get_func_coeffs
+after get_func_coeffs
+Matrix coeff
+1
+
+Before get_coefficient (recursive) rh_coeffs
+Entered get_coefficient
+   get_coefficient LinOp id is f673c8de-c5b4-45fc-97d2-d44980548827
+Before get_func_coeffs
+after get_func_coeffs
+Matrix coeff
+-1.20707
+0.277429
+
+Before get_coefficient (recursive) rh_coeffs
+Entered get_coefficient
+   get_coefficient LinOp id is c96e8e67-8d2e-462b-a59b-1f56fe26f7f8
+Before get_variable_coeffs
+after get_variable_coeffs
+Leaving get_coefficient
+after get_coefficient (recursive) rh_coeffs
+mul_by_const coeff_mat
+-1.20707
+0.277429
+
+mul_by_const rh
+1
+
+after mul_by_const
+Leaving get_coefficient
+after get_coefficient (recursive) rh_coeffs
+mul_by_const coeff_mat
+1
+
+mul_by_const rh
+-1.20707
+0.277429
+
+after mul_by_const
+Matrix coeff
+1
+
+Before get_coefficient (recursive) rh_coeffs
+Entered get_coefficient
+   get_coefficient LinOp id is 970e2cde-e618-41db-8099-54aa8ad8ad20
+Before get_const_coeffs
+after get_const_coeffs
+Leaving get_coefficient
+after get_coefficient (recursive) rh_coeffs
+mul_by_const coeff_mat
+1
+
+mul_by_const rh
+-1.08444
+2.3457
+
+after mul_by_const
+Leaving get_coefficient
+after get_coefficient (recursive) rh_coeffs
+mul_by_const coeff_mat
+2
+
+mul_by_const rh
+-1.08444
+2.3457
+
+mul_by_const coeff_mat
+2
+
+mul_by_const rh
+-1.20707
+0.277429
+
+after mul_by_const
+Leaving get_coefficient
+after get_coefficient (recursive) rh_coeffs
+mul_by_const coeff_mat
+-1 0
+0 -1
+
+mul_by_const rh
+-2.16888
+4.6914
+
+mul_by_const coeff_mat
+-1 0
+0 -1
+
+mul_by_const rh
+-2.41413
+0.554858
+
+after mul_by_const
+Leaving get_coefficient
+In process_constraint
+In process_constraint else start
+In process_constraint else end
+In build_matrix after process_constraint
+   LinOp id is 4b437459-016f-4daa-9190-0dee09cdbd2e
+In build_matrix after loop
+after ineqData build_matrix
+In get_num_variables
+In to_long
+In to_long
+In to_long
+In negate
+In to_long
+In to_long
+In negate
+In get_obj_vec
+DEBUG DIMENSIONS:
+N: 2
+M: 5
+P: 0
+L: 1
+NCONES: 1
+Q:
+4
+E: 0
+OFFSET: 0
+after Ecos
+
+ECOS 2.0.4 - (C) embotech GmbH, Zurich Switzerland, 2012-15. Web: www.embotech.com/ECOS
+
+It     pcost       dcost      gap   pres   dres    k/t    mu     step   sigma     IR    |   BT
+ 0  +0.000e+00  -1.253e+00  +8e+00  4e-01  9e-02  1e+00  3e+00    ---    ---    1  1  - |  -  -
+ 1  +1.098e+00  +1.005e+00  +2e+00  1e-01  2e-02  5e-01  9e-01  0.7583  8e-02   2  2  2 |  0  0
+ 2  +1.359e+00  +2.562e+00  +1e+00  5e-01  4e-02  3e+00  6e-01  0.6870  4e-01   2  2  2 |  0  0
+ 3  +3.849e+00  +3.821e+00  +8e-02  2e-02  1e-03  2e-02  3e-02  0.9673  1e-02   2  1  1 |  0  0
+ 4  +4.160e+00  +4.158e+00  +7e-03  1e-03  1e-04  3e-03  2e-03  0.9266  2e-02   2  1  2 |  0  0
+ 5  +4.174e+00  +4.174e+00  +2e-04  3e-05  3e-06  4e-05  6e-05  0.9752  1e-04   2  1  1 |  0  0
+ 6  +4.175e+00  +4.175e+00  +9e-06  2e-06  2e-07  3e-06  3e-06  0.9473  5e-03   2  1  1 |  0  0
+ 7  +4.175e+00  +4.175e+00  +1e-07  3e-08  2e-09  6e-08  5e-08  0.9854  5e-04   3  1  1 |  0  0
+ 8  +4.175e+00  +4.175e+00  +2e-09  3e-10  3e-11  7e-10  6e-10  0.9890  1e-04   2  1  1 |  0  0
+
+OPTIMAL (within feastol=2.9e-10, reltol=3.7e-10, abstol=1.5e-09).
+Runtime: 0.005804 seconds.
+
+After solution
+>q()
+
+Process R finished at Wed Apr 26 18:00:35 2017

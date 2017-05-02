@@ -234,9 +234,12 @@ void LinOp__set_type(SEXP xp, int typeValue) {
     oType = SOC;    // second-order cone
     break;
   case 27:
-    oType = EXP;    // exponential cone
+    oType = SOC_AXIS;    // elementwise second-order cone
     break;
   case 28:
+    oType = EXP;    // exponential cone
+    break;
+  case 29:
     oType = SDP;    // semi-definite cone
     break;
   default:
@@ -349,11 +352,14 @@ int LinOp__get_type(SEXP xp) {
   case SOC:
     oType = 26;
     break;
-  case EXP:
+  case SOC_AXIS:
     oType = 27;
     break;
-  case SDP:
+  case EXP:
     oType = 28;
+    break;
+  case SDP:
+    oType = 29;
     break;
   default:
     oType = -1;

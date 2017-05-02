@@ -21,13 +21,36 @@
 #include "LinOpOperations.hpp"
 #include "ProblemData.hpp"
 
+void gcFun() {
+#ifdef CVXCANON_DEBUG
+  // Rcpp::Rcout << "Entering gc()" << std::endl;
+#endif
+  Rcpp::ExpressionVector exp( "gc()" );
+  SEXP s = exp.eval();
+#ifdef CVXCANON_DEBUG
+  //Rcpp::Rcout << "Exiting gc()" << std::endl;
+#endif
+}
+
+
 void mul_by_const(Matrix &coeff_mat,
                   std::map<int, Matrix > &rh_coeffs,
                   std::map<int, Matrix > &result) {
   typedef std::map<int, Matrix >::iterator it_type;
   for (it_type it = rh_coeffs.begin(); it != rh_coeffs.end(); ++it) {
     int id = it->first;
+#ifdef CVXCANON_DEBUG
+    Rcpp::Rcout << "mul_by_const coeff_mat" << std::endl;
+    Rcpp::Rcout << coeff_mat << std::endl;
+#endif
+
     Matrix rh = it->second;
+
+#ifdef CVXCANON_DEBUG
+    Rcpp::Rcout << "mul_by_const rh " << std::endl;
+    Rcpp::Rcout << rh << std::endl;
+#endif
+
     /* Convert scalars (1x1 matrices) to primitive types */
     if (coeff_mat.rows() == 1 && coeff_mat.cols() == 1) {
       double scalar = coeff_mat.coeffRef(0, 0);
@@ -52,8 +75,23 @@ void mul_by_const(Matrix &coeff_mat,
 
 std::map<int, Matrix > get_coefficient(LinOp &lin) {
   std::map<int, Matrix > coeffs;
+#ifdef CVXCANON_DEBUG
+  Rcpp::Rcout << "Entered get_coefficient" << std::endl;
+  Rcpp::Rcout << "   get_coefficient LinOp id is " << lin.id << std::endl;
+#endif
+
   if (lin.type == VARIABLE) {
+#ifdef CVXCANON_DEBUG
+  Rcpp::Rcout << "Before get_variable_coeffs" << std::endl;
+#endif
+
     std::map<int, Matrix> new_coeffs = get_variable_coeffs(lin);
+
+#ifdef CVXCANON_DEBUG
+    gcFun();
+    Rcpp::Rcout << "after get_variable_coeffs" << std::endl;
+#endif
+
     typedef std::map<int, Matrix >::iterator it_type;
     for (it_type it = new_coeffs.begin(); it != new_coeffs.end(); ++it) {
       if (coeffs.count(it->first) == 0) {
@@ -64,7 +102,16 @@ std::map<int, Matrix > get_coefficient(LinOp &lin) {
     }
   } else if (lin.has_constant_type()) {
     /* ID will be CONSTANT_TYPE */
+#ifdef CVXCANON_DEBUG
+  Rcpp::Rcout << "Before get_const_coeffs" << std::endl;
+#endif
+
     std::map<int, Matrix> new_coeffs = get_const_coeffs(lin);
+#ifdef CVXCANON_DEBUG
+    gcFun();
+    Rcpp::Rcout << "after get_const_coeffs" << std::endl;
+#endif
+
     typedef std::map<int, Matrix >::iterator it_type;
     for (it_type it = new_coeffs.begin(); it != new_coeffs.end(); ++it) {
       if (coeffs.count(it->first) == 0) {
@@ -75,12 +122,40 @@ std::map<int, Matrix > get_coefficient(LinOp &lin) {
     }
   } else {
     /* Multiply the arguments of the function coefficient in order */
+
+#ifdef CVXCANON_DEBUG
+  Rcpp::Rcout << "Before get_func_coeffs" << std::endl;
+#endif
+
     std::vector<Matrix> coeff_mat = get_func_coeffs(lin);
+
+#ifdef CVXCANON_DEBUG
+    gcFun();
+    Rcpp::Rcout << "after get_func_coeffs" << std::endl;
+#endif
+
     for (unsigned i = 0; i < lin.args.size(); i++) {
       Matrix coeff = coeff_mat[i];
+
+#ifdef CVXCANON_DEBUG
+      Rcpp::Rcout << "Matrix coeff" << std::endl;
+      Rcpp::Rcout << coeff << std::endl;
+      Rcpp::Rcout << "Before get_coefficient (recursive) rh_coeffs" << std::endl;
+#endif
+
       std::map<int, Matrix > rh_coeffs = get_coefficient(*lin.args[i]);
+#ifdef CVXCANON_DEBUG
+    gcFun();
+    Rcpp::Rcout << "after get_coefficient (recursive) rh_coeffs" << std::endl;
+#endif
+
+
       std::map<int,  Matrix > new_coeffs;
       mul_by_const(coeff, rh_coeffs, new_coeffs);
+#ifdef CVXCANON_DEBUG
+      Rcpp::Rcout << "after mul_by_const" << std::endl;
+#endif
+
 
       typedef std::map<int, Matrix>::iterator it_type;
       for (it_type it = new_coeffs.begin(); it != new_coeffs.end(); ++it) {
@@ -91,6 +166,10 @@ std::map<int, Matrix > get_coefficient(LinOp &lin) {
       }
     }
   }
+#ifdef CVXCANON_DEBUG
+  Rcpp::Rcout << "Leaving get_coefficient" << std::endl;
+#endif
+
   return coeffs;
 }
 
@@ -141,6 +220,9 @@ void process_constraint(LinOp & lin, std::vector<double> &V,
                         std::map<int, int> &id_to_col, int & horiz_offset) {
   /* Get the coefficient for the current constraint */
   std::map<int, Matrix > coeffs = get_coefficient(lin);
+#ifdef CVXCANON_DEBUG
+  Rcpp::Rcout << "In process_constraint" << std::endl;
+#endif
 
   typedef std::map<int, Matrix >::iterator it_type;
   for (it_type it = coeffs.begin(); it != coeffs.end(); ++it) {
@@ -149,7 +231,15 @@ void process_constraint(LinOp & lin, std::vector<double> &V,
     if (id == CONSTANT_ID) {   // Add to CONSTANT_VEC if linop is constant
       extend_constant_vec(constant_vec, vert_offset, block);
     } else {
+#ifdef CVXCANON_DEBUG
+  Rcpp::Rcout << "In process_constraint else start" << std::endl;
+#endif
+
       int offset = get_horiz_offset(id, id_to_col, horiz_offset, lin);
+#ifdef CVXCANON_DEBUG
+  Rcpp::Rcout << "In process_constraint else end" << std::endl;
+#endif
+
       add_matrix_to_vectors(block, V, I, J, vert_offset, offset);
     }
   }
@@ -179,9 +269,9 @@ int get_total_constraint_length(std::vector<LinOp*> &constraints,
   int offset_end = 0;
   /* Offsets must be monotonically increasing */
   for (unsigned i = 0; i < constr_offsets.size(); i++) {
-    LinOp constr = *constraints[i];
+    // LinOp constr = *constraints[i];
     int offset_start = constr_offsets[i];
-    offset_end = offset_start + constr.size[0] * constr.size[1];
+    offset_end = offset_start + constraints[i]->size[0] * constraints[i]->size[1];
 
     if (i + 1 < constr_offsets.size() && constr_offsets[i + 1] < offset_end) {
       std::cerr << "Error: Invalid constraint offsets: ";
@@ -209,23 +299,54 @@ int get_total_constraint_length(std::vector<LinOp*> &constraints,
 ProblemData build_matrix(std::vector< LinOp* > constraints,
                          std::map<int, int> id_to_col) {
   ProblemData prob_data;
+#ifdef CVXCANON_DEBUG
+  Rcpp::Rcout << "In build_matrix before get_total_constraint_length" << std::endl;
+#endif
+
   int num_rows = get_total_constraint_length(constraints);
+#ifdef CVXCANON_DEBUG
+  Rcpp::Rcout << "In build_matrix after get_total_constraint_length" << std::endl;
+#endif
+  //  gcFun();
+
   prob_data.const_vec = std::vector<double> (num_rows, 0);
   prob_data.id_to_col = id_to_col;
   int vert_offset = 0;
   int horiz_offset  = 0;
 
+#ifdef CVXCANON_DEBUG
+  Rcpp::Rcout << "In build_matrix before loop" << std::endl;
+#endif
   /* Build matrix one constraint at a time */
   for (unsigned i = 0; i < constraints.size(); i++) {
-    //    LinOp constr = *constraints[i];
-    LinOp * constr = constraints[i];
-    process_constraint(*constr, prob_data.V, prob_data.I, prob_data.J,
-                       prob_data.const_vec, vert_offset,
-                       prob_data.id_to_col, horiz_offset);
+    LinOp *constr = constraints[i];
+
+#ifdef CVXCANON_DEBUG
+  Rcpp::Rcout << "In build_matrix before process_constraint" << std::endl;
+  Rcpp::Rcout << "   LinOp id is " << constr->id << std::endl;
+#endif
+  gcFun();
+#ifdef CVXCANON_DEBUG
+  Rcpp::Rcout << "gc done" << std::endl;
+#endif
+
+  process_constraint(*constr, prob_data.V, prob_data.I, prob_data.J,
+		     prob_data.const_vec, vert_offset,
+		     prob_data.id_to_col, horiz_offset);
+
+#ifdef CVXCANON_DEBUG
+  Rcpp::Rcout << "In build_matrix after process_constraint" << std::endl;
+  Rcpp::Rcout << "   LinOp id is " << constr->id << std::endl;
+#endif
+
     prob_data.const_to_row[i] = vert_offset;
-    // vert_offset += constr.size[0] * constr.size[1];
     vert_offset += constr->size[0] * constr->size[1];
   }
+
+#ifdef CVXCANON_DEBUG
+  Rcpp::Rcout << "In build_matrix after loop" << std::endl;
+#endif
+
   prob_data.num_constraints = num_rows;
   return prob_data;
 }
@@ -249,11 +370,18 @@ ProblemData build_matrix(std::vector<LinOp*> constraints,
   prob_data.id_to_col = id_to_col;
   int horiz_offset  = 0;
 
+  LinOp * constr;
   /* Build matrix one constraint at a time */
   for (unsigned i = 0; i < constraints.size(); i++) {
     //    LinOp constr = *constraints[i];
-    LinOp *constr = constraints[i];
+    constr = constraints[i];
     int vert_offset = constr_offsets[i];
+
+#ifdef CVXCANON_DEBUG
+  Rcpp::Rcout << "In build_matrix before process_constraint (more args)" << std::endl;
+  Rcpp::Rcout << "   LinOp id is " << constr->id << std::endl;
+#endif
+
     process_constraint(*constr, prob_data.V, prob_data.I, prob_data.J,
                        prob_data.const_vec, vert_offset,
                        prob_data.id_to_col, horiz_offset);

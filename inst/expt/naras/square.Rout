@@ -1,0 +1,350 @@
+
+R version 3.3.3 (2017-03-06) -- "Another Canoe"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin13.4.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> > options(STERM='iESS', str.dendrogram.last="'", editor='emacsclient', show.error.locations=TRUE)
+> library(cvxr)
+library(MASS)
+set.seed(1234)
+n <- 6
+
+Attaching package: ‘cvxr’
+
+The following object is masked from ‘package:stats’:
+
+    reshape
+
+The following objects are masked from ‘package:base’:
+
+    F, trace
+
+> > > > m <- 2
+> A <- matrix(rnorm(n*m), nrow = n, ncol = m)
+> b <- matrix(rnorm(n), nrow = n)
+> x <- Variable(rows = m)
+> obj <- Minimize(SumSquares(A %*% x - b))
+> solve(Problem(obj))
+obj2 <- Minimize(sum((A %*% x - b)^2))
+[1] "Calling CVXcanon"
+LinOp id 4c3bc030-9c6b-42fc-b24b-d39731cdff97 Created!
+LinOp Id 4c3bc030-9c6b-42fc-b24b-d39731cdff97 type now 0
+LinOpVector id 128a114a-5b63-451b-a87b-09de726d474f Created!
+LinOp id b6071606-402e-4e6d-b837-a63d669b212a Created!
+LinOp Id b6071606-402e-4e6d-b837-a63d669b212a type now 26
+LinOp id 2f1c1b3c-2cbc-457b-adfb-d03955e362b1 Created!
+LinOp id ba71c9e0-cd21-4ea5-af07-936293035d00 Created!
+LinOp id 8c6e0e36-2f7a-4914-b0ab-d49458a3547e Created!
+LinOp Id 2f1c1b3c-2cbc-457b-adfb-d03955e362b1 type now 6
+LinOp Id ba71c9e0-cd21-4ea5-af07-936293035d00 type now 19
+LinOp Id 8c6e0e36-2f7a-4914-b0ab-d49458a3547e type now 0
+LinOp id ef0a7b6a-2fd0-43f4-bb7e-8fe3069d7baf Created!
+LinOp id a6b59f80-d331-45ae-9f56-c94ab6dbd955 Created!
+LinOp id 4826eb9b-91e4-4a3b-99d9-67f6ac9d756b Created!
+LinOp Id ef0a7b6a-2fd0-43f4-bb7e-8fe3069d7baf type now 6
+LinOp Id a6b59f80-d331-45ae-9f56-c94ab6dbd955 type now 19
+LinOp id 1db7447f-b873-48f6-9d32-da0db9ba8666 Created!
+LinOp Id 4826eb9b-91e4-4a3b-99d9-67f6ac9d756b type now 7
+LinOp Id 1db7447f-b873-48f6-9d32-da0db9ba8666 type now 0
+LinOp id 173b70ef-58fa-4f2c-a929-b444b15f8088 Created!
+LinOp id 94e3f3d9-b446-4b9a-8794-abcacb36d394 Created!
+LinOp Id 173b70ef-58fa-4f2c-a929-b444b15f8088 type now 2
+LinOp id f0567f0d-9227-4678-b570-54465a3c7897 Created!
+LinOp id e65307ea-0c79-4353-ae44-2df561615808 Created!
+LinOp Id 94e3f3d9-b446-4b9a-8794-abcacb36d394 type now 6
+LinOp id 2864c682-95ee-4506-83ff-9a34c2295754 Created!
+LinOp Id f0567f0d-9227-4678-b570-54465a3c7897 type now 2
+LinOp Id e65307ea-0c79-4353-ae44-2df561615808 type now 20
+LinOp Id 2864c682-95ee-4506-83ff-9a34c2295754 type now 0
+LinOp id e6f518db-2794-4bbd-9740-0f49b2f5e3b7 Created!
+LinOp Id e6f518db-2794-4bbd-9740-0f49b2f5e3b7 type now 25
+LinOp id 3a2c6f9c-d4f6-44ed-8689-24e12c93bd84 Created!
+LinOp id 58f2bc55-8f09-4edb-924c-a41812b2f9d9 Created!
+LinOp Id 3a2c6f9c-d4f6-44ed-8689-24e12c93bd84 type now 7
+LinOp Id 58f2bc55-8f09-4edb-924c-a41812b2f9d9 type now 19
+Objective:
+[1] "LinOp(id=4c3bc030-9c6b-42fc-b24b-d39731cdff97, type=VARIABLE, size=[1, 1], args=[  ], sparse=FALSE, data=[6])"
+Constraints:
+[1] "[ LinOp(id=b6071606-402e-4e6d-b837-a63d669b212a, type=SOC, size=[8, 1], args=[ LinOp(id=2f1c1b3c-2cbc-457b-adfb-d03955e362b1, type=SUM, size=[1, 1], args=[ LinOp(id=ba71c9e0-cd21-4ea5-af07-936293035d00, type=SCALAR_CONST, size=[1, 1], args=[  ], sparse=FALSE, data=[1]), LinOp(id=8c6e0e36-2f7a-4914-b0ab-d49458a3547e, type=VARIABLE, size=[1, 1], args=[  ], sparse=FALSE, data=[6]) ], sparse=FALSE, data=[]), LinOp(id=ef0a7b6a-2fd0-43f4-bb7e-8fe3069d7baf, type=SUM, size=[1, 1], args=[ LinOp(id=a6b59f80-d331-45ae-9f56-c94ab6dbd955, type=SCALAR_CONST, size=[1, 1], args=[  ], sparse=FALSE, data=[1]), LinOp(id=4826eb9b-91e4-4a3b-99d9-67f6ac9d756b, type=NEG, size=[1, 1], args=[ LinOp(id=1db7447f-b873-48f6-9d32-da0db9ba8666, type=VARIABLE, size=[1, 1], args=[  ], sparse=FALSE, data=[6]) ], sparse=FALSE, data=[]) ], sparse=FALSE, data=[]), LinOp(id=173b70ef-58fa-4f2c-a929-b444b15f8088, type=MUL, size=[6, 1], args=[ LinOp(id=94e3f3d9-b446-4b9a-8794-abcacb36d394, type=SUM, size=[6, 1], args=[ LinOp(id=f0567f0d-9227-4678-b570-54465a3c7897, type=MUL, size=[6, 1], args=[ LinOp(id=2864c682-95ee-4506-83ff-9a34c2295754, type=VARIABLE, size=[2, 1], args=[  ], sparse=FALSE, data=[5]) ], sparse=FALSE, data=[-1.20706574938542, 0.27742924211066, 1.08444117668306, -2.34569770262935, 0.42912468881105, 0.506055892157574, -0.574739960134649, -0.546631855784187, -0.564451999093283, -0.890037829044104, -0.477192699753547, -0.998386444859704]), LinOp(id=e65307ea-0c79-4353-ae44-2df561615808, type=DENSE_CONST, size=[6, 1], args=[  ], sparse=FALSE, data=[0.77625389463799, -0.0644588172762693, -0.959494058970771, 0.110285494390774, 0.511009505806642, 0.911195416629811]) ], sparse=FALSE, data=[]) ], sparse=FALSE, data=[2]) ], sparse=FALSE, data=[3]), LinOp(id=e6f518db-2794-4bbd-9740-0f49b2f5e3b7, type=LEQ, size=[1, 1], args=[ LinOp(id=3a2c6f9c-d4f6-44ed-8689-24e12c93bd84, type=NEG, size=[1, 1], args=[ LinOp(id=58f2bc55-8f09-4edb-924c-a41812b2f9d9, type=SCALAR_CONST, size=[1, 1], args=[  ], sparse=FALSE, data=[1]) ], sparse=FALSE, data=[]) ], sparse=FALSE, data=[7]) ]"
+26
+25
+After constraints
+After solver options
+26
+25
+In filter_constraints
+26
+25
+In filter_constraints (before return)
+26
+25
+After constr_map
+After compute_dimensions
+After get_vars_and_offsets
+Before Ecos
+In get_dual_variables
+In get_dual_variables
+before problem data
+after problem data
+In format_affine_constr
+after eq constrs
+In format_affine_constr
+after leq constrs
+In format_soc_constrs
+In negate_expression
+LinOp id 132a9d0a-7cb2-455a-a73e-01c7cef61e21 Created!
+In negate_expression
+LinOp id 79db88b7-e030-422c-9794-2483694b3869 Created!
+In negate_expression
+LinOp id 4833cc54-621f-484e-82be-6186d00d7be2 Created!
+after soc constrs
+In format_soc_elmewise_constrs
+after soc_elemwise_constrs
+In format_exp_constrs
+after ineq constrs
+before objdata
+In build_matrix before loop
+In build_matrix before process_constraint
+   LinOp id is 4c3bc030-9c6b-42fc-b24b-d39731cdff97
+In process_constraint
+In build_matrix after process_constraint
+   LinOp id is 4c3bc030-9c6b-42fc-b24b-d39731cdff97
+In build_matrix after loop
+after objdata
+In build_matrix before loop
+In build_matrix after loop
+after eqdata
+In build_matrix before loop
+In build_matrix before process_constraint
+   LinOp id is 3a2c6f9c-d4f6-44ed-8689-24e12c93bd84
+In process_constraint
+In build_matrix after process_constraint
+   LinOp id is 3a2c6f9c-d4f6-44ed-8689-24e12c93bd84
+In build_matrix before process_constraint
+   LinOp id is 132a9d0a-7cb2-455a-a73e-01c7cef61e21
+In process_constraint
+In build_matrix after process_constraint
+   LinOp id is 132a9d0a-7cb2-455a-a73e-01c7cef61e21
+In build_matrix before process_constraint
+   LinOp id is 79db88b7-e030-422c-9794-2483694b3869
+In process_constraint
+In build_matrix after process_constraint
+   LinOp id is 79db88b7-e030-422c-9794-2483694b3869
+In build_matrix before process_constraint
+   LinOp id is 4833cc54-621f-484e-82be-6186d00d7be2
+In process_constraint
+In build_matrix after process_constraint
+   LinOp id is 4833cc54-621f-484e-82be-6186d00d7be2
+In build_matrix after loop
+after ineqData build_matrix
+In get_num_variables
+In to_long
+In to_long
+In to_long
+In negate
+In to_long
+In to_long
+In negate
+In get_obj_vec
+DEBUG DIMENSIONS:
+N: 3
+M: 9
+P: 0
+L: 1
+NCONES: 1
+Q:
+8
+E: 0
+OFFSET: 0
+after Ecos
+
+ECOS 2.0.4 - (C) embotech GmbH, Zurich Switzerland, 2012-15. Web: www.embotech.com/ECOS
+
+It     pcost       dcost      gap   pres   dres    k/t    mu     step   sigma     IR    |   BT
+ 0  +1.138e-23  -1.107e+00  +9e+00  4e-01  3e-02  1e+00  3e+00    ---    ---    1  1  - |  -  -
+ 1  +1.408e-01  -2.489e-02  +2e+00  1e-01  6e-03  2e-01  7e-01  0.8112  1e-02   1  1  1 |  0  0
+ 2  +7.696e-01  +9.787e-01  +1e+00  3e-01  9e-03  9e-01  5e-01  0.5913  5e-01   2  2  2 |  0  0
+ 3  +1.995e+00  +1.988e+00  +3e-02  7e-03  2e-04  8e-03  1e-02  0.9762  5e-04   2  1  1 |  0  0
+ 4  +2.052e+00  +2.052e+00  +3e-03  6e-04  2e-05  6e-04  1e-03  0.9120  1e-03   2  1  1 |  0  0
+ 5  +2.062e+00  +2.062e+00  +3e-04  7e-05  2e-06  3e-04  1e-04  0.9494  8e-02   2  2  2 |  0  0
+ 6  +2.063e+00  +2.063e+00  +3e-05  6e-06  2e-07  3e-05  1e-05  0.9175  1e-03   2  1  1 |  0  0
+ 7  +2.063e+00  +2.063e+00  +2e-06  5e-07  2e-08  4e-06  1e-06  0.9771  8e-02   2  1  1 |  0  0
+ 8  +2.063e+00  +2.063e+00  +1e-07  3e-08  9e-10  2e-07  6e-08  0.9472  3e-04   2  1  1 |  0  0
+ 9  +2.063e+00  +2.063e+00  +5e-09  1e-09  4e-11  1e-08  3e-09  0.9890  4e-02   3  1  1 |  0  0
+
+OPTIMAL (within feastol=1.3e-09, reltol=2.6e-09, abstol=5.4e-09).
+Runtime: 0.016638 seconds.
+
+After solution
+<CVXcanon.Solution>
+  Public:
+    clone: function (deep = FALSE)
+    dual_values: active binding
+    initialize: function (ptr = NULL)
+    optimal_value: active binding
+    primal_values: active binding
+    status: active binding
+  Private:
+    myClassName: CVXcanon.Solution
+    pkg: cvxr
+    ptr: externalptr
+    statusCodes: OPTIMAL INFEASIBLE UNBOUNDED OPTIMAL_INACCURATE INFEASIB ...
+> >
+> gc()
+LinOp id 58f2bc55-8f09-4edb-924c-a41812b2f9d9 ; type 19 Destroyed!!
+LinOp id 3a2c6f9c-d4f6-44ed-8689-24e12c93bd84 ; type 7 Destroyed!!
+LinOp id e6f518db-2794-4bbd-9740-0f49b2f5e3b7 ; type 25 Destroyed!!
+LinOp id 2864c682-95ee-4506-83ff-9a34c2295754 ; type 0 Destroyed!!
+LinOp id e65307ea-0c79-4353-ae44-2df561615808 ; type 20 Destroyed!!
+LinOp id f0567f0d-9227-4678-b570-54465a3c7897 ; type 2 Destroyed!!
+LinOp id 94e3f3d9-b446-4b9a-8794-abcacb36d394 ; type 6 Destroyed!!
+LinOp id 173b70ef-58fa-4f2c-a929-b444b15f8088 ; type 2 Destroyed!!
+LinOp id 1db7447f-b873-48f6-9d32-da0db9ba8666 ; type 0 Destroyed!!
+LinOp id 4826eb9b-91e4-4a3b-99d9-67f6ac9d756b ; type 7 Destroyed!!
+LinOp id a6b59f80-d331-45ae-9f56-c94ab6dbd955 ; type 19 Destroyed!!
+LinOp id ef0a7b6a-2fd0-43f4-bb7e-8fe3069d7baf ; type 6 Destroyed!!
+LinOp id 8c6e0e36-2f7a-4914-b0ab-d49458a3547e ; type 0 Destroyed!!
+LinOp id ba71c9e0-cd21-4ea5-af07-936293035d00 ; type 19 Destroyed!!
+LinOp id 2f1c1b3c-2cbc-457b-adfb-d03955e362b1 ; type 6 Destroyed!!
+LinOp id b6071606-402e-4e6d-b837-a63d669b212a ; type 26 Destroyed!!
+LinOpVector id 128a114a-5b63-451b-a87b-09de726d474f Destroyed!
+LinOp id 4c3bc030-9c6b-42fc-b24b-d39731cdff97 ; type 0 Destroyed!!
+          used (Mb) gc trigger  (Mb) max used (Mb)
+Ncells 1551524 82.9    2637877 140.9  1869872 99.9
+Vcells 1979858 15.2    3142662  24.0  2406184 18.4
+> write.matrix(format(A, digits = 14, scientific = TRUE), file = "a.txt")
+> write.matrix(format(b, digits = 14, scientific = TRUE), file = "b.txt")
+> solve(Problem(obj2))
+[1] "Calling CVXcanon"
+LinOp id 7b2291ca-9614-43c8-a79a-a73290548eb3 Created!
+LinOp id e845f26e-f6ce-4330-ad76-8ea02fced243 Created!
+LinOp Id 7b2291ca-9614-43c8-a79a-a73290548eb3 type now 10
+LinOp Id e845f26e-f6ce-4330-ad76-8ea02fced243 type now 0
+LinOpVector id cc275a64-71cc-4a6b-9f49-2c3890d4bf0a Created!
+LinOp id d6f33d2b-b06a-4a64-ab7d-222244ab64e2 Created!
+LinOp Id d6f33d2b-b06a-4a64-ab7d-222244ab64e2 type now 27
+LinOp id 31494c37-a950-4a1b-b20d-1dfb9e89a7cb Created!
+LinOp id 0dff093f-8db8-487f-90f5-1cb50617d0b7 Created!
+LinOp Id 31494c37-a950-4a1b-b20d-1dfb9e89a7cb type now 12
+LinOp id 51574a9c-6e08-4abd-98af-18044e9fccbe Created!
+LinOp id c93f776e-b000-4e9c-b969-a6aac07e5845 Created!
+LinOp Id 0dff093f-8db8-487f-90f5-1cb50617d0b7 type now 6
+LinOp Id 51574a9c-6e08-4abd-98af-18044e9fccbe type now 0
+LinOp Id c93f776e-b000-4e9c-b969-a6aac07e5845 type now 20
+LinOp id 01a2febe-cb1d-491d-9537-dcb9fc71dfde Created!
+LinOp id 9328b492-0946-438f-bc24-285e99f9b73b Created!
+LinOp id a639c9e3-fbef-46b7-a6a2-cf38b73be973 Created!
+LinOp Id 01a2febe-cb1d-491d-9537-dcb9fc71dfde type now 18
+LinOp id 15b188d9-a9f6-45a3-9bb8-d3cfa0db8d5e Created!
+LinOp Id 9328b492-0946-438f-bc24-285e99f9b73b type now 12
+LinOp id 715661e9-260c-45ea-8995-d333ff91f9eb Created!
+LinOp Id a639c9e3-fbef-46b7-a6a2-cf38b73be973 type now 12
+LinOp id 8f48ec89-7f53-4aa3-adff-5fda421a20ed Created!
+LinOp id cc37a275-bb1b-479c-bef1-e4f0c373389f Created!
+LinOp Id 15b188d9-a9f6-45a3-9bb8-d3cfa0db8d5e type now 6
+LinOp id 0bd5ed9f-fe13-4874-85a3-6aacecb9ff7c Created!
+LinOp Id 715661e9-260c-45ea-8995-d333ff91f9eb type now 2
+LinOp Id 8f48ec89-7f53-4aa3-adff-5fda421a20ed type now 0
+LinOp id 8ce2f471-c609-488c-97e9-c8874cc98388 Created!
+LinOp Id cc37a275-bb1b-479c-bef1-e4f0c373389f type now 7
+LinOp id 46a12545-bd66-4cfd-896d-915c1ff3eb4f Created!
+LinOp id dcbe530e-c1aa-4430-865a-c86469d11102 Created!
+LinOp Id 0bd5ed9f-fe13-4874-85a3-6aacecb9ff7c type now 6
+LinOp Id 8ce2f471-c609-488c-97e9-c8874cc98388 type now 20
+LinOp id 0ce2e879-4f54-44fc-9a7f-99e135d13659 Created!
+LinOp Id 46a12545-bd66-4cfd-896d-915c1ff3eb4f type now 2
+LinOp Id dcbe530e-c1aa-4430-865a-c86469d11102 type now 20
+LinOp Id 0ce2e879-4f54-44fc-9a7f-99e135d13659 type now 0
+Objective:
+[1] "LinOp(id=7b2291ca-9614-43c8-a79a-a73290548eb3, type=SUM_ENTRIES, size=[1, 1], args=[ LinOp(id=e845f26e-f6ce-4330-ad76-8ea02fced243, type=VARIABLE, size=[6, 1], args=[  ], sparse=FALSE, data=[8]) ], sparse=FALSE, data=[])"
+Constraints:
+[1] "[ LinOp(id=d6f33d2b-b06a-4a64-ab7d-222244ab64e2, type=SOC_AXIS, size=[7, 1], args=[ LinOp(id=31494c37-a950-4a1b-b20d-1dfb9e89a7cb, type=RESHAPE, size=[6, 1], args=[ LinOp(id=0dff093f-8db8-487f-90f5-1cb50617d0b7, type=SUM, size=[6, 1], args=[ LinOp(id=51574a9c-6e08-4abd-98af-18044e9fccbe, type=VARIABLE, size=[6, 1], args=[  ], sparse=FALSE, data=[8]), LinOp(id=c93f776e-b000-4e9c-b969-a6aac07e5845, type=DENSE_CONST, size=[6, 1], args=[  ], sparse=FALSE, data=[1, 1, 1, 1, 1, 1]) ], sparse=FALSE, data=[]) ], sparse=FALSE, data=[]), LinOp(id=01a2febe-cb1d-491d-9537-dcb9fc71dfde, type=VSTACK, size=[2, 6], args=[ LinOp(id=9328b492-0946-438f-bc24-285e99f9b73b, type=RESHAPE, size=[1, 6], args=[ LinOp(id=15b188d9-a9f6-45a3-9bb8-d3cfa0db8d5e, type=SUM, size=[6, 1], args=[ LinOp(id=8f48ec89-7f53-4aa3-adff-5fda421a20ed, type=VARIABLE, size=[6, 1], args=[  ], sparse=FALSE, data=[8]), LinOp(id=cc37a275-bb1b-479c-bef1-e4f0c373389f, type=NEG, size=[6, 1], args=[ LinOp(id=8ce2f471-c609-488c-97e9-c8874cc98388, type=DENSE_CONST, size=[6, 1], args=[  ], sparse=FALSE, data=[1, 1, 1, 1, 1, 1]) ], sparse=FALSE, data=[]) ], sparse=FALSE, data=[]) ], sparse=FALSE, data=[]), LinOp(id=a639c9e3-fbef-46b7-a6a2-cf38b73be973, type=RESHAPE, size=[1, 6], args=[ LinOp(id=715661e9-260c-45ea-8995-d333ff91f9eb, type=MUL, size=[6, 1], args=[ LinOp(id=0bd5ed9f-fe13-4874-85a3-6aacecb9ff7c, type=SUM, size=[6, 1], args=[ LinOp(id=46a12545-bd66-4cfd-896d-915c1ff3eb4f, type=MUL, size=[6, 1], args=[ LinOp(id=0ce2e879-4f54-44fc-9a7f-99e135d13659, type=VARIABLE, size=[2, 1], args=[  ], sparse=FALSE, data=[5]) ], sparse=FALSE, data=[-1.20706574938542, 0.27742924211066, 1.08444117668306, -2.34569770262935, 0.42912468881105, 0.506055892157574, -0.574739960134649, -0.546631855784187, -0.564451999093283, -0.890037829044104, -0.477192699753547, -0.998386444859704]), LinOp(id=dcbe530e-c1aa-4430-865a-c86469d11102, type=DENSE_CONST, size=[6, 1], args=[  ], sparse=FALSE, data=[0.77625389463799, -0.0644588172762693, -0.959494058970771, 0.110285494390774, 0.511009505806642, 0.911195416629811]) ], sparse=FALSE, data=[]) ], sparse=FALSE, data=[2]) ], sparse=FALSE, data=[]) ], sparse=FALSE, data=[]) ], sparse=FALSE, data=[3]) ]"
+27
+After constraints
+After solver options
+27
+In filter_constraints
+27
+In filter_constraints (before return)
+27
+After constr_map
+After compute_dimensions
+After get_vars_and_offsets
+Before Ecos
+In get_dual_variables
+In get_dual_variables
+before problem data
+after problem data
+In format_affine_constr
+after eq constrs
+In format_affine_constr
+after leq constrs
+In format_soc_constrs
+after soc constrs
+In format_soc_elmewise_constrs
+In format_elementwise
+In get_spacing_matrix
+In mul_expression
+LinOp id 64b4ef78-6573-459f-978a-a1f4c826cb09 Created!
+In get_spacing_matrix
+In mul_expression
+LinOp id 03382fe5-c7e8-49c5-8732-aa7f116a0087 Created!
+In sum_expression
+LinOp id 2ea31a3d-b211-410e-8929-d9b3089eedc9 Created!
+In negate_expression
+LinOp id c3246a42-3d53-414f-84c4-5ca078f3fc62 Created!
+after soc_elemwise_constrs
+In format_exp_constrs
+after ineq constrs
+before objdata
+In build_matrix before loop
+In build_matrix before process_constraint
+   LinOp id is 7b2291ca-9614-43c8-a79a-a73290548eb3
+In process_constraint
+In build_matrix after process_constraint
+   LinOp id is 7b2291ca-9614-43c8-a79a-a73290548eb3
+In build_matrix after loop
+after objdata
+In build_matrix before loop
+In build_matrix after loop
+after eqdata
+In build_matrix before loop
+In build_matrix before process_constraint
+   LinOp id is c3246a42-3d53-414f-84c4-5ca078f3fc62
+LinOp id 9328b492-0946-438f-bc24-285e99f9b73b ; type 12 Destroyed!!
+LinOp id a639c9e3-fbef-46b7-a6a2-cf38b73be973 ; type 12 Destroyed!!
+
+ *** caught segfault ***
+address 0x0, cause 'unknown'
+
+Traceback:
+ 1: .Call(rcppMungedName(cppClassName = private$myClassName, methodName = "solve",     thisPkg = pkg), sense, objective$getXPtr(), constraints$getXPtr(),   ...
+ 2: cvxCanon$solve(C_sense, C_objective, C_constraints, C_opts)
+ 3: solve_int(sense, canon_objective, constraints, verbose, ...)
+ 4: solve.Problem(Problem(obj2))
+ 5: solve(Problem(obj2))
+
+Possible actions:
+1: abort (with core dump, if enabled)
+2: normal R exit
+3: exit R without saving workspace
+4: exit R saving workspace
+Selection: R
+Selection: 1
+R is aborting now ...
+
+Process R segmentation fault: 11 at Sat Apr 22 07:36:11 2017

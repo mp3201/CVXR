@@ -1,0 +1,69 @@
+[
+  LinOp(id=ba2fbe0c-cd8d-48c9-bac2-ec6c2f5c82b4,
+        type=SOC_AXIS, size=[3, 1],
+	args=[ LinOp(id=65f01355-9312-4bc4-a352-27d592c87221,
+	             type=RESHAPE, size=[2, 1],
+		     args=[ LinOp(id=39cb784a-9726-45ed-ad8b-d923db8b2560,
+		     		  type=SUM, size=[2, 1],
+				  args=[ LinOp(id=eb658b85-67a2-4b56-a8f6-06f45ad02396,
+				               type=VARIABLE, size=[2, 1],
+					       args=[  ],
+					       sparse=FALSE, data=[7]),
+					 LinOp(id=244a292c-652e-4ed2-9445-dc283b36f8b7,
+					       type=DENSE_CONST, size=[2, 1],
+					       args=[  ],
+					       sparse=FALSE, data=[1, 1])
+				       ],
+				       sparse=FALSE, data=[])
+		          ],
+			  sparse=FALSE, data=[]),
+	       LinOp(id=ab4f9063-1a43-45ee-b8e3-99a4290f2b8c,
+	             type=VSTACK, size=[2, 2],
+		     args=[ LinOp(id=f4cfcb0c-6fc4-4cf3-971e-baf329b6f76f,
+		                  type=RESHAPE, size=[1, 2],
+				  args=[ LinOp(id=a6c0912f-8f62-493b-9eb7-a8c0220dd822,
+				               type=SUM, size=[2, 1],
+					       args=[ LinOp(id=13d1aab9-9734-45da-9d2a-03bf75dfc4ae,
+					                    type=VARIABLE, size=[2, 1],
+							    args=[  ],
+							    sparse=FALSE, data=[7]),
+						      LinOp(id=ed2b90d7-fd01-4486-8883-f6287ec04026,
+						            type=NEG, size=[2, 1],
+							    args=[ LinOp(id=d19edac4-796f-4df9-b9b8-b81f7e8101bf,
+							                 type=DENSE_CONST, size=[2, 1],
+									 args=[  ],
+									 sparse=FALSE, data=[1, 1])
+								 ],
+								 sparse=FALSE, data=[])
+						    ],
+						    sparse=FALSE, data=[])
+				       ], sparse=FALSE, data=[]),
+			    LinOp(id=460ab653-3d10-43d1-90e7-00c2ebf1c8cb,
+			          type=RESHAPE, size=[1, 2],
+				  args=[ LinOp(id=8ede48b5-2316-46f7-a7e4-11ee4ea19dfa,
+				               type=MUL, size=[2, 1],
+					       args=[ LinOp(id=4ff746fc-d12f-498e-82e1-f650c5825917,
+					                    type=SUM, size=[2, 1],
+							    args=[ LinOp(id=011c1f93-e788-4170-9ce8-5d96c0004c3b,
+							                 type=MUL, size=[2, 1],
+									 args=[ LinOp(id=d44ce0c7-47b1-4ff4-ac42-eb0116fec1de,
+									              type=VARIABLE, size=[1, 1],
+										      args=[  ],
+										      sparse=FALSE, data=[5])
+									      ],
+									      sparse=FALSE, data=[-1.20706574938542, 0.27742924211066]),
+							           LinOp(id=912c950f-3759-4043-a925-ac7f2eae6c2f,
+								         type=DENSE_CONST, size=[2, 1],
+									 args=[  ],
+									 sparse=FALSE, data=[-1.08444117668306, 2.34569770262935])
+							         ],
+								 sparse=FALSE, data=[])
+						    ],
+						    sparse=FALSE, data=[2])
+		                       ],
+				       sparse=FALSE, data=[])
+		          ],
+			  sparse=FALSE, data=[])
+	     ],
+	     sparse=FALSE, data=[3])
+]

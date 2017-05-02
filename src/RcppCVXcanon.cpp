@@ -35,6 +35,7 @@
  * Constraint Types:  EQ,     // equality constraint
  *                    LEQ,    // non-negative orthant
  *                    SOC,    // second-order cone
+ *                    SOC_AXIS, // elementwise second-order cone
  *                    EXP,    // exponential cone
  *                    SDP,    // semi-definite cone **** NOT CURRENTLY SUPPORTED
  */
@@ -47,6 +48,8 @@ filter_constraints(std::vector<LinOp *> constraints) {
                     std::vector<LinOp *> >(LEQ, std::vector<LinOp *>()));
   constr_map.insert(std::pair<OperatorType,
                     std::vector<LinOp *> >(SOC, std::vector<LinOp *>()));
+  constr_map.insert(std::pair<OperatorType,
+                    std::vector<LinOp *> >(SOC_AXIS, std::vector<LinOp *>()));
   constr_map.insert(std::pair<OperatorType,
                     std::vector<LinOp *> >(EXP, std::vector<LinOp *>()));
 
@@ -106,15 +109,37 @@ compute_dimensions(std::map<OperatorType, std::vector<LinOp *> > constr_map) {
 
   // dims[SOC] defines the dimension of the i-th SOC
   std::vector<LinOp *> soc_constr = constr_map[SOC];
+  // for (int i = 0; i < soc_constr.size(); i++) {
+  //   LinOp constr = *soc_constr[i];
+  //   dims[SOC].push_back(constr.size[0]);
+  // }
   for (int i = 0; i < soc_constr.size(); i++) {
-    LinOp constr = *soc_constr[i];
-    dims[SOC].push_back(constr.size[0]);
+    dims[SOC].push_back(soc_constr[i]->size[0]);
   }
 
   // EXP
   int num_exp_cones = accumulate_size(constr_map[EXP]);
   dims[EXP].push_back(num_exp_cones);
 
+  // SOC_AXIS
+  std::vector<LinOp *> soc_elem_constr = constr_map[SOC_AXIS];
+  // for (int i = 0; i < soc_elem_constr.size(); i++){
+  //   LinOp constr = *soc_elem_constr[i];
+  //   LinOp t = *constr.args[0];
+  //   int num_cones = t.size[0] * t.size[1];
+  //   int cone_size = constr.args.size();  // (1 + len(x.elems))
+  //   for (int i = 0; i < num_cones; i++){
+  //     dims[SOC].push_back(cone_size);
+  //   }
+  // }
+  for (int i = 0; i < soc_elem_constr.size(); i++){
+    int num_cones = (soc_elem_constr[i]->args[0])->size[0] *
+      (soc_elem_constr[i]->args[0])->size[1];
+    int cone_size = (soc_elem_constr[i]->args).size();  // (1 + len(x.elems))
+    for (int i = 0; i < num_cones; i++){
+      dims[SOC].push_back(cone_size);
+    }
+  }
   return dims;
 }
 
