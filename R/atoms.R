@@ -918,7 +918,8 @@ Pnorm.graph_implementation <- function(arg_objs, size, data = NA_real_) {
       return(list(t, list(SOC(t, list(x)))))
     else {
       t <- create_var(size)
-      return(list(t, list(SOCAxis(reshape(t, c(prod(t$size), 1)), x, axis))))
+      stop("Unimplemented: dependency on SOCAxis")
+      # return(list(t, list(SOCAxis(reshape(t, c(prod(t$size), 1)), x, axis))))
     }
   }
   
@@ -1183,7 +1184,7 @@ QuadOverLin.graph_implementation <- function(arg_objs, size, data = NA_real_) {
   two <- create_const(2, c(1,1))
   constraints <- list(SOC(sum_expr(list(y, v)),
                           list(sub_expr(y, v),
-                               mul_expr(two, x, x$size))),
+                               mul_expr(two, x, size(x)))),
                       create_geq(y))
   list(v, constraints)
 }

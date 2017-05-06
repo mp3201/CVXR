@@ -759,16 +759,11 @@ setMethod(".domain", "Sqrt", function(object) { list(object@args[[1]] >= 0) })
 Sqrt.graph_implementation <- function(arg_objs, size, data = NA_real_) {
   x <- arg_objs[[1]]
   t <- create_var(size)
-  one <- create_const(matrix(1, nrow = size[1], ncol = size[2]), size)
-  two <- create_const(2, c(1, 1))
-  length <- prod(size(x))
-  constraints <- list(SOCAxis(reshape(sum_expr(list(x, one)), c(length, 1)),
-                              vstack(list(
-                              reshape(sub_expr(x, one), c(1, length)),
-                              reshape(mul_expr(two, t, size(t)), c(1, length))
-                              ), c(2, length)),
-                            2))
-  list(t, constraints)
+  
+  graph <- Square.graph_implementation(list(t), size)
+  obj <- graph[[1]]
+  constraints <- graph[[2]]
+  list(t, c(constraints, list(create_leq(obj, x))))
 }
 
 setMethod("graph_implementation", "Sqrt", function(object, arg_objs, size, data = NA_real_) {
@@ -804,13 +799,11 @@ Square.graph_implementation <- function(arg_objs, size, data = NA_real_) {
   t <- create_var(size)
   one <- create_const(matrix(1, nrow = size[1], ncol = size[2]), size)
   two <- create_const(2, c(1, 1))
-  length <- prod(size(x))
-  constraints <- list(SOCAxis(reshape(sum_expr(list(t, one)), c(length, 1)),
-                              vstack(list(
-                                reshape(sub_expr(t, one), c(1, length)),
-                                reshape(mul_expr(two, x, size(x)), c(1, length))
-                                ), c(2, length)),
-                              2))
+  constraints <- list(SOCElemwise(sum_expr(list(one, t)),
+                                  list(sub_expr(one, t), 
+                                       mul_expr(two, x, size(x))
+                                  )),
+                      create_geq(y))
   list(t, constraints)
 }
 

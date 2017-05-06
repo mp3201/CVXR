@@ -281,34 +281,34 @@ setMethod("format_constr", "SDP", function(object, eq_constr, leq_constr, dims, 
   list(eq_constr = eq_constr, leq_constr = leq_cosntr, dims = dims)
 })
 
-.SOCAxis <- setClass("SOCAxis", representation(axis = "numeric"), 
-                    validity = function(object) {
-                      if(size(object@t)[2] != 1)
-                        stop("[SOCAxis: t] t must have second dimension equal to 1")
-                      return(TRUE)
-                    }, contains = "SOC")
-SOCAxis <- function(t, X, axis) { .SOCAxis(t = t, x_elems = list(X), axis = axis) }
+.SOCElemwise <- setClass("SOCElemwise", validity = function(object) {
+                                          lapply(object@x_elems, function(x) {
+                                            if(!all(size(x) == size(object@t)))
+                                              stop("[SOCElemwise: x_elems] all x_elems must have same dimensions as t")
+                                          })
+                                          return(TRUE)
+                                        }, contains = "SOC")
+SOCElemwise <- function(t, x_elems) { .SOCElemwise(t = t, x_elems = x_elems) }
 
-setMethod("as.character", "SOCAxis", function(x) { 
-  paste("SOCAxis(", as.character(x@t), ", ", as.character(x@x_elems[[1]]), ", <", paste(x@axis, collapse = ", "), ">)", sep = "")
+setMethod("as.character", "SOCElemwise", function(x) {
+  paste("SOCElemwise(", as.character(x@t), ", <", paste(lapply(x@x_elems, as.character), collapse = ","), ">)", sep = "")
 })
 
-setMethod("format_constr", "SOCAxis", function(object, eq_constr, leq_constr, dims, solver) {
- .format <- function(object) {
-   list(list(), format_axis(object@t, object@x_elems[[1]], object@axis))
- }
+setMethod("format_constr", "SOCElemwise", function(object, eq_constr, leq_constr, dims, solver) {
+  .format <- function(object) {
+    list(list(), format_elemwise(c(list(object@t), object@x_elems)))
+  }
+  leq_constr <- c(leq_constr, .format(object)[[2]]))
 
- leq_constr <- c(leq_constr, .format(object)[[2]])
- 
- # Update dims
- for(cone_size in size(object))
-   dims[SOC_DIM] <- c(dims[SOC_DIM], cone_size[1])
- list(eq_constr = eq_constr, leq_constr = leq_constr, dims = dims)
+  # Update dims
+  for(cone_size in size(object))
+    dims[SOC_DIM] <- c(dims[SOC_DIM], cone_size[1])
+  list(eq_constr = eq_constr, leq_constr = leq_constr, dims = dims)
 })
 
-setMethod("num_cones", "SOCAxis", function(object) { size(object@t)[1] })
-setMethod("cone_size", "SOCAxis", function(object) { c(1 + size(object@x_elems[[1]])[object@axis], 1) })
-setMethod("size", "SOCAxis", function(object) {
+setMethod("num_cones", "SOCElemwise", function(object) { prod(size(object@t)) })
+setMethod("cone_size", "SOCElemwise", function(object) { c(1 + length(object@x_elems), 1) })
+setMethod("size", "SOCElemwise", function(object) {
   cone_size <- cone_size(object)
   lapply(1:num_cones(object), function(i) { cone_size })
 })

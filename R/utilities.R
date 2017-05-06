@@ -194,7 +194,7 @@ format_axis <- function(t, X, axis) {
 }
 
 format_elemwise <- function(vars_) {
-  # Create matcies A_i such that 0 <= A_0*x_0 + ... + A_n*x_n
+  # Create matrices A_i such that 0 <= A_0*x_0 + ... + A_n*x_n
   # gives the format for the elementwise cone constraints.
   spacing <- length(vars_)
   prod_size <- c(spacing * vars_[[1]]$size[1], vars_[[1]]$size[2])
@@ -252,11 +252,13 @@ flatten_list <- function(x) {
 gm <- function(t, x, y) {
   two <- create_const(2, c(1, 1))
   length <- prod(size(t))
-  SOCAxis(reshape(sum_expr(list(x, y)), c(length, 1)),
-          vstack(list(
-              reshape(sub_expr(x, y), c(1, length)),
-              reshape(mul_expr(two, t, size(t)), c(1, length))
-            ), c(2, length)), 0)
+  
+  stop("Unimplemented: dependency on SOCAxis")
+  # SOCAxis(reshape(sum_expr(list(x, y)), c(length, 1)),
+  #        vstack(list(
+  #            reshape(sub_expr(x, y), c(1, length)),
+  #            reshape(mul_expr(two, t, size(t)), c(1, length))
+  #          ), c(2, length)), 0)
 }
 
 gm_constrs <- function(t, x_list, p) {
