@@ -772,7 +772,7 @@ qol_elemwise <- function(arg_objs, size, data = NA_real_) {
   y <- arg_objs[[2]]
   t <- create_var(size(x))
   two <- create_const(2, c(1,1))
-  constraints <- list(SOC_Elemwise(sum_expr(list(y,t)),
+  constraints <- list(SOCElemwise(sum_expr(list(y,t)),
                                    list(sub_expr(y, t),
                                         mul_expr(two, x, size(x)))),
                       create_geq(y))

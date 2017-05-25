@@ -298,7 +298,7 @@ setMethod("format_constr", "SOCElemwise", function(object, eq_constr, leq_constr
   .format <- function(object) {
     list(list(), format_elemwise(c(list(object@t), object@x_elems)))
   }
-  leq_constr <- c(leq_constr, .format(object)[[2]]))
+  leq_constr <- c(leq_constr, .format(object)[[2]])
 
   # Update dims
   for(cone_size in size(object))
