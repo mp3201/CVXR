@@ -276,8 +276,49 @@ setMethod("graph_implementation", "Huber", function(object, arg_objs, size, data
   Huber.graph_implementation(arg_objs, size, data)
 })
 
-InvPos <- function(x) { Power(x, -1) }
+# TODO: InvPos <- function(x) { Power(x, -1) }
+.InvPos <- setClass("InvPos", representation(x = "ConstValORExpr"), contains = "Elementwise")
+InvPos <- function(x) { .InvPos(x = x) }
 inv_pos <- InvPos
+
+setMethod("initialize", "InvPos", function(.Object, ..., x) {
+  .Object@x <- x
+  callNextMethod(.Object, ..., args = list(.Object@x))
+})
+
+setMethod("to_numeric", "InvPos", function(object, values) { 1.0/values[[1]] })
+setMethod("sign_from_args", "InvPos", function(object) { c(TRUE, FALSE) })
+setMethod("is_atom_convex", "InvPos", function(object) { FALSE })
+setMethod("is_atom_concave", "InvPos", function(object) { TRUE })
+setMethod("is_incr", "InvPos", function(object, idx) { TRUE })
+setMethod("is_decr", "InvPos", function(object, idx) { FALSE })
+setMethod("is_quadratic", "InvPos", function(object) { is_constant(object@args[[1]]) })
+
+InvPos.graph_implementation <- function(arg_objs, size, data = NA_real_) {
+  rows <- size[1]
+  cols <- size[2]
+  x <- arg_objs[[1]]
+  t <- create_var(size)
+  one <- create_const(1, c(1,1))
+  
+  constraints <- list()
+  for(i in 1:rows) {
+    for(j in 1:cols) {
+      xi <- Index.get_index(x, constraints, i, j)
+      ti <- Index.get_index(t, constraints, i, j)
+      # TODO: graph <- QuadOverLin.graph_implementation(list(one, xi), c(1,1))
+      # TODO: obj <- graph[[1]]
+      # TODO: qol_constr <- graph[[2]]
+      constraints <- c(constraints, qol_constr)
+      constraints <- c(constraints, list(create_leq(obj, ti), create_geq(xi)))
+    }
+  }
+  list(t, constraints)
+}
+
+setMethod("graph_implementation", "InvPos", function(object, arg_objs, size, data = NA_real_) {
+  InvPos.graph_implementation(arg_objs, size, data)
+})
 
 .KLDiv <- setClass("KLDiv", representation(x = "ConstValORExpr", y = "ConstValORExpr"), contains = "Elementwise")
 KLDiv <- function(x, y) { .KLDiv(x = x, y = y) }
@@ -726,6 +767,18 @@ setMethod("graph_implementation", "Power", function(object, arg_objs, size, data
   Power.graph_implementation(arg_objs, size, data)
 })
 
+qol_elemwise <- function(arg_objs, size, data = NA_real_) {
+  x <- arg_objs[[1]]
+  y <- arg_objs[[2]]
+  t <- create_var(size(x))
+  two <- create_const(2, c(1,1))
+  constraints <- list(SOC_Elemwise(sum_expr(list(y,t)),
+                                   list(sub_expr(y, t),
+                                        mul_expr(two, x, size(x)))),
+                      create_geq(y))
+  list(t, constraints)
+}
+
 Scalene <- function(x, alpha, beta) { alpha*Pos(x) + beta*Neg(x) }
 
 # Sqrt <- function(x) { Power(x, 1/2) }
@@ -796,15 +849,11 @@ setMethod(".domain", "Square", function(object) { list() })
 
 Square.graph_implementation <- function(arg_objs, size, data = NA_real_) {
   x <- arg_objs[[1]]
-  t <- create_var(size)
-  one <- create_const(matrix(1, nrow = size[1], ncol = size[2]), size)
-  two <- create_const(2, c(1, 1))
-  constraints <- list(SOCElemwise(sum_expr(list(one, t)),
-                                  list(sub_expr(one, t), 
-                                       mul_expr(two, x, size(x))
-                                  )),
-                      create_geq(y))
-  list(t, constraints)
+  ones <- create_const(matrix(1, nrow = size[1], ncol = size[2]), size)
+  qol <- qol_elemwise(list(x, ones), size)
+  obj <- qol[[1]]
+  constraints <- qol[[2]]
+  list(obj, constraints)
 }
 
 setMethod("graph_implementation", "Square", function(object, arg_objs, size, data = NA_real_) {
